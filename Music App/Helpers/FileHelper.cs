@@ -6,7 +6,7 @@ namespace Music_App.Helpers
     {
         public static async Task<string> UploadImage(IFormFile file)
         {
-            string connectionString = @"DefaultEndpointsProtocol=https;AccountName=musicstorageaccount;AccountKey=C2HFKmmekJcJWNvIK/vOo4JbF8V09V6yxC77QOw6iarUbZT0TNR6ElunPXaNhHbVE3Kau/Jwa9ARbbvIRi1mmg==;EndpointSuffix=core.windows.net";
+            string connectionString = @"";
             string containerName = "songscover";
 
             BlobContainerClient blobContainerClient = new BlobContainerClient(connectionString, containerName);
@@ -20,7 +20,7 @@ namespace Music_App.Helpers
 
         public static async Task<string> UploadFile(IFormFile file)
         {
-            string connectionString = @"DefaultEndpointsProtocol=https;AccountName=musicstorageaccount;AccountKey=C2HFKmmekJcJWNvIK/vOo4JbF8V09V6yxC77QOw6iarUbZT0TNR6ElunPXaNhHbVE3Kau/Jwa9ARbbvIRi1mmg==;EndpointSuffix=core.windows.net";
+            string connectionString = @"";
             string containerName = "audiofiles";
 
             BlobContainerClient blobContainerClient = new BlobContainerClient(connectionString, containerName);
