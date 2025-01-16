@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Music_App.Models;
+using Music_App.Models.EntityConfigurations;
+using System.ComponentModel;
 
 namespace Music_App.Data
 {
@@ -10,30 +12,28 @@ namespace Music_App.Data
                 
         }
 
-        public DbSet<Song> Songs { get; set; }
+        public DbSet<Song> Songs { get; set; } = null!;
+        public DbSet<Artist> Artists { get; set; } = null!;
+        public DbSet<Album> Albums { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Song>().HasData(
-                new Song
-                {
-                    Id = 1,
-                    Title = "You got gold",
-                    Language = "en",
-                },
-                new Song
-                {
-                    Id = 2,
-                    Title = "O O O",
-                    Language = "fr"
-                },
-                new Song
-                {
-                    Id = 3,
-                    Title = "Bella Ciao",
-                    Language = "it"
-                }
-                );
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApiDbContext).Assembly);
+            modelBuilder.ApplyConfiguration(new SongEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ArtistEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new AlbumEntityTypeConfiguration());
+        }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder builder)
+        {
+            base.ConfigureConventions(builder);
+
+            builder.Properties<DateOnly>()
+                .HaveConversion<DateOnlyConverter>()
+                .HaveColumnType("date");
+
+            builder.Properties<TimeOnly>()
+                .HaveConversion<TimeOnlyConverter>();
         }
     }
 }
